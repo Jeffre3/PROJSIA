@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Webforge - Register & Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="register.css" />
+</head>
+<body style="display: flex; justify-content:center; align-items: center; height: 100vh; overflow: hidden;">
+    <div class="form-wrap">
+        <div class="tabs">
+            <h3 class="signup-tab"><a class="active" href="#signup-tab-content" style="border-top-left-radius: 7px;">Sign Up</a></h3>
+            <h3 class="login-tab"><a href="#login-tab-content" style="border-top-right-radius: 7px;">Login</a></h3>
+        </div>
+        <div class="tabs-content">
+            <!-- Display Message (This would need to be replaced by actual error or success message in PHP) -->
+            <p style="color:red;">Error: Email or Username already exists.</p> 
+
+            <div id="signup-tab-content" class="active">
+                <form class="signup-form" action="signup_process.html" method="post">
+                    <input type="email" class="input" name="email" autocomplete="off" placeholder="Email" required>
+                    <input type="text" class="input" name="username" autocomplete="off" placeholder="Username" required>
+                    <input type="password" class="input" name="password" autocomplete="off" placeholder="Password" required>
+                    <input type="submit" class="button" value="Sign Up">
+                </form>
+            </div>
+
+            <div id="login-tab-content">
+                <form class="login-form" action="login_process.html" method="post">
+                    <input type="text" class="input" name="login" autocomplete="off" placeholder="Email or Username" required>
+                    <input type="password" class="input" name="password" autocomplete="off" placeholder="Password" required>
+                    <input type="checkbox" class="checkbox" id="remember_me">
+                    <label for="remember_me">Remember me</label>
+                    <input type="submit" class="button" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+
+        const tab = $('.tabs h3 a');
+        if (tabParam === "login") {
+            tab.removeClass('active');
+            $('a[href="#login-tab-content"]').addClass('active');
+            $('div[id$="tab-content"]').removeClass('active');
+            $('#login-tab-content').addClass('active');
+        }
+
+        tab.on('click', function(event) {
+            event.preventDefault();
+            tab.removeClass('active');
+            $(this).addClass('active');
+            const tabContent = $(this).attr('href');
+            $('div[id$="tab-content"]').removeClass('active');
+            $(tabContent).addClass('active');
+        });
+    });
+    </script>
+</body>
+</html>
